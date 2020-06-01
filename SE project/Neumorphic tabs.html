@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://codepen.io/mburridge/pen/rNVeaKv -->
+<html lang="en" class="pc chrome79 js"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Community</title>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@CodePen">
+<meta name="twitter:title" content="Neumorphic tabs">
+<meta name="twitter:description" content="Tabbed content with JavaScript, neumorphic styling, and dark mode. Also remembers previous state on reload....">
+<meta name="twitter:image" content="https://screenshot.codepen.io/2175991.rNVeaKv.54352415-eb58-42ab-93eb-5223d4a03fd2.png">
+<meta name="twitter:creator" content="@michaelburridge">
+<meta property="og:image" content="https://codepen.io/mburridge/pen/rNVeaKv/image/large.png" itemprop="thumbnailUrl">
+<meta property="og:title" content="Neumorphic tabs">
+<meta property="og:url" content="https://codepen.io/mburridge/details/rNVeaKv">
+<meta property="og:site_name" content="CodePen">
+<meta property="og:description" content="Tabbed content with JavaScript, neumorphic styling, and dark mode. Also remembers previous state on reload....">
+<link rel="alternate" type="application/json+oembed" href="https://codepen.io/api/oembed?url=https://codepen.io/mburridge/pen/rNVeaKv&amp;format=json" title="Neumorphic tabs">
+<link href="./Neumorphic tabs_files/css" rel="stylesheet">
+<link rel="stylesheet" media="all" href="./Neumorphic tabs_files/global-f839a9762a4bac16ee1084c23959df40c4ee99d2268ceeb4c9ab7bf63405791f.css">
+<link rel="stylesheet" media="screen" href="./Neumorphic tabs_files/everypage-6d7e50da.css">
+<link rel="stylesheet" media="all" href="./Neumorphic tabs_files/editor-9757f81e391ce262705f1997bc49c92c6a05b538f444f25b4725bbd947f59f83.css">
+<meta name="description" content="Tabbed content with JavaScript, neumorphic styling, and dark mode. Also remembers previous state on reload....">
+<link rel="stylesheet" media="screen" href="./Neumorphic tabs_files/twilight-c4d2eafba805f08fdb40c0900ac100b78469aba0532ca487a4fb1591a9424a02.css" id="cm-theme">
+<style id="cm-font-family" class="cm-font-family">
+  
+      
+  .CodeMirror,
+  .console-logs .console-line,
+  .console-command-line-input,
+  .console-message,
+  .CodeMirror-hint {
+    font-family: Monaco, MonoSpace;
+  }
+</style>
+<style id="cm-font-size">
+  .CodeMirror,
+  .console-logs .console-line,
+  .console-command-line-input,
+  .console-message,
+  .CodeMirror-hint {
+    font-size: 14px;
+  }
+</style>
+<link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+<meta name="apple-mobile-web-app-title" content="CodePen">
+<link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+<link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+<script type="text/javascript" async="" src="./Neumorphic tabs_files/analytics.js.download"></script><script async="" src="./Neumorphic tabs_files/js"></script>
+<meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="/6w0W3wKfWkJSU3ErxzN2rz0d6PH3oYO/56szSxjd1QGnxZbtXHHVGWdKi5zFRO9ox4TvQk9yojHB+c6384SLQ==">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>/* Firefox needs this to prevent FOUC. */</script>
+</head>
+<body class="room-editor editor state-htmlOn-cssOn-jsOn sidebar-false   layout-top  logged-out">
+
+<div class="output-container">
+<div class="output-sizer">
+<div id="result_div" class="result">
+<iframe id="result" name="CodePen" src="./Neumorphic tabs_files/rNVeaKv.html" sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media" scrolling="auto" allowtransparency="true" allowpaymentrequest="true" allowfullscreen="true" class="result-iframe ">
+          </iframe>
+<div id="editor-drag-cover" class="drag-cover" style="display: none;"></div>
+</div>
+<div id="box-console" class="box box-console">
+<div class="editor-resizer editor-resizer-console" title="Drag to resize. Double-click to expand."></div>
+<div class="powers">
+<div class="powers-drag-handle" title="Drag to resize. Double-click to expand."></div>
+<div class="editor-actions-left">
+<h2 class="box-title"><span class="box-title-name">Console</span></h2>
+</div>
+<div class="editor-actions-right">
+<button class="button button-medium mini-button console-clear-button" title="Clear">
+Clear
+</button>
+<button class="button button-medium mini-button close-editor-button" data-type="console" title="Close">
+<svg class="icon-x">
+<use xlink:href="/svg_sprite?v=8885a907#x"></use>
+</svg>
+</button>
+</div>
+</div>
+<div class="console-wrap">
+<div class="console-entries short-no-scroll"></div>
+<div class="console-command-line">
+<span class="console-arrow forwards"></span>
+<textarea class="console-command-line-input auto-expand" rows="1" data-min-rows="1"></textarea>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</body></html>

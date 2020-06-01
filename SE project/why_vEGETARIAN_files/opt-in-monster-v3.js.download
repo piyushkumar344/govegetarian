@@ -1,0 +1,8 @@
+// JavaScript Document
+
+var a = document.createElement('script');
+a.type = 'text/javascript';
+a.src = 'https://a.optmnstr.com/app/js/api.min.js';
+a.setAttribute('data-campaign', 't9vffigoqylxstgierpz');
+a.setAttribute('data-user', '18206');
+document.body.appendChild(a);

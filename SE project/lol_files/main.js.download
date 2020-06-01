@@ -1,0 +1,359 @@
+/* ---------------------------------------------------------------------
+Global Js
+Target Browsers: All
+------------------------------------------------------------------------ */
+
+var FX = (function(FX, $) {
+
+    /**
+     * Force External Links to open in new window.
+     * @type {Object}
+     */
+    FX.ExternalLinks = {
+        init: function() {
+            var siteUrlBase = FX.siteurl.replace(/^https?:\/\/((w){3})?/,'')
+
+            $('a[href*="//"]:not([href*="'+siteUrlBase+'"])')
+                .not('.ignore-external') // ignore class for excluding
+                .addClass('external')
+                .attr('target', '_blank')
+                .attr('rel', 'noopener');
+        }
+    };
+
+
+    /**
+     * ImAHuman
+     * Hidden Captchas for forms
+     * @type {Object}
+     */
+    FX.ImAHuman = {
+        num: "0xFF9481",
+        forms: void 0,
+
+        init: function() {
+            this.setup()
+        },
+
+        setup: function() {
+            this.forms = document.getElementsByTagName("form");
+            this.bind();
+        },
+
+        bind: function() {
+            for (var i = 0; this.forms.length > i; i++) {
+                $(this.forms[i]).on("focus click", this.markAsHuman);
+            }
+        },
+
+        markAsHuman: function() {
+            $(this).find('.imahuman, [name="imahuman"]').attr("value", parseInt(FX.ImAHuman.num, 16))
+        }
+    }
+
+
+    FX.Product = {
+        init: function() {
+            $('.products-slide').slick({
+                dots: false,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 3,
+                autoplay: false,
+                autoplaySpeed: 500,
+                pauseOnHover: false,
+                arrows: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2,
+
+                        }
+                    },
+                    {
+                      breakpoint: 480,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                ]
+            });
+        }
+    }
+
+
+
+    /**
+     * Tab Content
+     * @type {Object}
+     */
+    FX.Tabs = {
+        init: function() {
+            $('.tabs__nav').on('click touchstart', 'a', this.switchTab)
+        },
+
+        switchTab: function(event) {
+            event.preventDefault();
+
+            var $this = $(this),
+                tab   = $($this.attr('href'));
+
+            $this.parent()
+                 .addClass('active')
+                 .siblings()
+                 .removeClass('active');
+
+            tab.addClass('active')
+               .siblings()
+               .removeClass('active');
+
+            FX.Sidebar.toggle($this);
+        }
+    }
+
+    /**
+     * Galleries Display
+     */
+    FX.Galleries = {
+
+        init: function() {
+            $('.gallery-item a').fancybox({
+                helpers: {
+                    thumbs: {
+                        width: 100,
+                        height: 100
+                    },
+                    media: {},
+                    nextClick: false,
+                    prevClick: false
+                }
+            });
+        },
+    }
+
+    FX.HomeSlider = {
+        init: function() {
+            this.W = $(window);
+            this.W.on('resize', $.proxy(this.onResize, this));
+
+            $('.masthead--slideshow').slick({
+                dots: true,
+                fade: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                speed: 1000,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                infinite: true,
+                arrows: false
+            });
+
+            this.onResize(null);
+        },
+
+        onResize: function(event) {
+            if( this.W.width() > 1024 ) {
+                $('.home .slick-track').css({'height': this.W.height()+'px'});
+            } else {
+                $('.home .slick-track').css({'height': ''});
+            }
+        }
+    };
+
+
+    FX.UI = {
+        init: function() {
+            $('.js-search-btn').on('click', this.toggleSearch);
+
+            //$('select').selectric();
+            $('.phone-number').mask('(000) 000-0000');
+
+            $('.menu').find('.menu-item-has-children').append('<span class="js-submenu-toggle"></span>');
+            $('.menu__button').on('click', this.toggleMobileMenu);
+            $('.js-submenu-toggle').on('click', this.toggleSubMenu);
+        },
+
+        toggleSearch: function(event) {
+            $('.js-search-form').fadeToggle(500);
+        },
+
+        toggleMobileMenu: function(event) {
+
+            $( '.nav--primary' )
+                .removeClass(' nav--primary__hover ')
+                .fadeToggle('fast');
+        },
+
+        toggleSubMenu: function(event){
+
+            var $this = $(this);
+
+            $this.toggleClass('caret_flip')
+                 .siblings('.sub-menu')
+                 .slideToggle(300);
+        }
+    }
+
+    /**
+     * FX.SmoothAnchors
+     * Smoothly Scroll to Anchor ID
+     * @type {Object}
+     */
+    FX.SmoothAnchors = {
+        init: function() {
+            this.hash = window.location.hash;
+
+            if ( this.hash != '' ) {
+                this.scrollToSmooth(this.hash);
+            }
+
+            this.bind();
+        },
+
+        bind: function() {
+            $('a[href^="#"]').on('click', $.proxy(this.onClick, this));
+        },
+
+        onClick: function(event) {
+            event.preventDefault;
+
+            var $target = $(event.currentTarget).attr('href');
+
+            this.scrollToSmooth($target);
+        },
+
+        scrollToSmooth: function($target) {
+            $target = $($target);
+            $target = ($target.length) ? $target : $('[name=' + this.hash.slice(1) +']');
+
+            var headerHeight = (viewport().width >= 1025) ? 191 : 0 ;
+
+            if ($target.length)
+            {
+                var targetOffset = $target.offset().top - headerHeight;
+                $('html,body').animate({scrollTop: targetOffset}, 600);
+
+                return false;
+            }
+        }
+    };
+
+
+    FX.Checkout = {
+        init: function() {
+            this.affixed = false;
+            this.review = $('.js-order-review');
+            $('body').on('click', '.js-submit-coupon', this.submitCoupon);
+            //$(window).on('scroll', $.proxy(this.affixReview, this));
+        },
+
+        submitCoupon: function(event) {
+            event.preventDefault();
+
+            $('#coupon_code').val( $('.js-coupon-code').val() );
+            $('.checkout_coupon').submit();
+        },
+
+        affixReview: function(event) {
+            var scrollTop     = $(window).scrollTop(),
+                heightOffset  = $('#page-header').height() - 40,
+                offset        = this.review.offset(),
+                $content      = $('#customer_details'),
+                contentOffset = $content.offset(),
+                contentHeight = $content.height();
+
+            if( viewport().w < 1025 ) {
+                this.clearStyle();
+                return;
+            }
+
+            //console.log( heightOffset, contentOffset.top, contentHeight )
+            console.log( (scrollTop + heightOffset + this.review.height()), (heightOffset + contentOffset.top + contentHeight) );
+            if( (scrollTop + heightOffset + this.review.height()) >= (heightOffset + contentOffset.top + contentHeight) ) {
+
+                if( this.affixed === 'top' ) {
+                    this.clearStyle();
+                }
+
+                this.review.css({
+                    position: 'fixed',
+                    bottom: $('#page-header').height() - 40,
+                    left: offset.left
+                });
+
+                this.affixed = 'bottom';
+
+            } else if( ( scrollTop + heightOffset) >= offset.top ) {
+
+                if( this.affixed === 'bottom' ) {
+                    this.clearStyle();
+                }
+
+                this.review.css({
+                    position: 'fixed',
+                    top: $('#page-header').height() - 40,
+                    left: offset.left
+                });
+                this.affixed = 'top';
+
+            } else {
+
+                this.clearStyle();
+                this.affixed = 'false';
+            }
+
+        },
+
+        clearStyle: function() {
+            this.review.removeAttr('style');
+        }
+    }
+
+
+    /**
+     * Doc Ready
+     */
+    $(function() {
+        FX.ExternalLinks.init();
+        FX.ImAHuman.init();
+        FX.UI.init();
+        FX.HomeSlider.init();
+        FX.Product.init();
+        FX.Checkout.init();
+        FX.Galleries.init();
+
+        $('.js-submenu-toggle').on('click', function(){
+            if ($(this).parent().find('.sub-category-list').hasClass('active')){
+                $(this).parent().find('.sub-category-list').addClass('hidden');
+                $(this).parent().find('.sub-category-list').removeClass('active');
+            }
+            else {
+                $(this).parent().find('.sub-category-list').addClass('active');
+                $(this).parent().find('.sub-category-list').removeClass('hidden');
+                $(this).parent().find('.sub-category-list').css('display', "block");
+            }
+        });
+
+        $( '.cart__list--quantity input').on('input', function(e) {
+            $('input[name="update_cart"]' ).removeProp( 'disabled');
+        });
+
+        $( "select" ).wrap( "<div class='select'></div>" );
+
+        //FX.SmoothAnchors.init();
+    });
+
+
+
+    /**
+     * Window Loaded
+     */
+    $(window).load(function() {
+
+    });
+
+    return FX;
+}(FX || {}, jQuery));
